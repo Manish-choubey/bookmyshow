@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: bookmyshow/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./bookmyshow
+      run: npm ci
+
+    - name: Run linter
+      working-directory: ./bookmyshow
+      run: npm run lint
+      continue-on-error: false
+
+    - name: Build project
+      working-directory: ./bookmyshow
+      run: npm run build
+
+    - name: Run tests
+      working-directory: ./bookmyshow
+      run: npm test
+      continue-on-error: true
+
+    - name: Verify Docker build
+      working-directory: ./bookmyshow
+      run: |
+        docker build -t bookmyshow-test:${{ github.sha }} .
+        docker rmi bookmyshow-test:${{ github.sha }}
+
