@@ -1,0 +1,72 @@
+{
+  "name": "bookmyshow-backend",
+  "version": "1.0.0",
+  "description": "BookMyShow Backend - Microservices Architecture",
+  "main": "dist/shared/server.js",
+  "scripts": {
+    "dev": "node --max-old-space-size=4096 node_modules/ts-node-dev/lib/bin.js --respawn --transpile-only api-geteway/index.ts",
+    "dev:auth": "ts-node-dev --respawn --transpile-only auth-service/index.ts",
+    "dev:movie": "ts-node-dev --respawn --transpile-only movie-service/index.ts",
+    "dev:booking": "ts-node-dev --respawn --transpile-only booking-service/index.ts",
+    "dev:payment": "ts-node-dev --respawn --transpile-only payment-service/index.ts",
+    "dev:notification": "ts-node-dev --respawn --transpile-only notification-service/index.ts",
+    "dev:search": "ts-node-dev --respawn --transpile-only search-service/index.ts",
+    "dev:all": "concurrently --names \"API-GW,AUTH,MOVIE,BOOKING,PAYMENT,NOTIFY,SEARCH\" --prefix-colors \"blue,green,yellow,cyan,magenta,red,white\" \"npm run dev\" \"npm run dev:auth\" \"npm run dev:movie\" \"npm run dev:booking\" \"npm run dev:payment\" \"npm run dev:notification\" \"npm run dev:search\"",
+    "build": "tsc",
+    "start": "node dist/shared/server.js",
+    "lint": "eslint . --ext .ts",
+    "test": "jest",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\"",
+  "lint:fix": "eslint . --ext .ts --fix"
+
+
+
+  },
+  "keywords": [
+    "bookmyshow",
+    "microservices",
+    "typescript",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/amqplib": "^0.10.8",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/pg": "^8.15.6",
+    "amqplib": "^0.10.9",
+    "axios": "^1.13.2",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^7.0.0",
+    "mongoose": "^8.19.3",
+    "morgan": "^1.10.0",
+    "pg": "^8.16.3",
+    "redis": "^5.9.0",
+    "uuid": "^13.0.0",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "prettier": "^3.6.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
